@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta http-equiv="refresh" content="10" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOQUENPÔ</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: gray;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        #players {
+            display: flex;
+            gap: 20px;
+        }
+        #buttons1, #buttons2 {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pedra, Papel e Tesoura - Que Comecem o Jogo</h1>
+    <div id="players">
+        <div>
+            <p>player 1</p>
+            <div id="buttons1">
+                <button onclick="jogar('pedra', 1)">
+                    <img src="img/pedra.jpg" alt="Pedra" width="50">
+                </button>
+                <button onclick="jogar('papel', 1)">
+                    <img src="img/papel.png" alt="Papel" width="50">
+                </button>
+                <button onclick="jogar('tesoura', 1)">
+                    <img src="img/tes.png" alt="Tesoura" width="50">
+                </button>
+            </div>
+        </div>
+        <div>
+            <p>player 2</p>
+            <div id="buttons2">
+                <button onclick="jogar('pedra', 2)">
+                    <img src="img/pedra.jpg" alt="Pedra" width="50">
+                </button>
+                <button onclick="jogar('papel', 2)">
+                    <img src="img/papel.png" alt="Papel" width="50">
+                </button>
+                <button onclick="jogar('tesoura', 2)">
+                    <img src="img/tes.png" alt="Tesoura" width="50">
+                </button>
+            </div>
+        </div>
+    </div>
+    <p id="result"></p>
+    <button onclick="atualizarPagina()">Atualizar</button>
+ 
+    <script>
+        let escolhas = {
+            1: '',
+            2: ''
+        };
+ 
+        function jogar(escolha, player) {
+            const opcoes = ['pedra', 'papel', 'tesoura'];
+            escolhas[player] = escolha;
+ 
+            if (escolhas[1] && escolhas[2]) {
+                const resultado = verificarVencedor(escolhas[1], escolhas[2]);
+                document.getElementById('result').innerHTML = `player 1 escolheu ${escolhas[1]}. player 2 escolheu ${escolhas[2]}. Resultado: ${resultado}`;
+                // Limpar escolhas para o próximo round
+                escolhas = { 1: '', 2: '' };
+            }
+        }
+ 
+        function verificarVencedor(escolhaplayer1, escolhaplayer2) {
+            if (escolhaplayer1 === escolhaplayer2) {
+                return 'Empate!';
+            } else if (
+                (escolhaplayer1 === 'pedra' && escolhaplayer2 === 'tesoura') ||
+                (escolhaplayer1 === 'papel' && escolhaplayer2 === 'pedra') ||
+                (escolhaplayer1 === 'tesoura' && escolhaplayer2 === 'papel')
+            ) {
+                return 'player 1 venceu!';
+            } else {
+                return 'player 2 venceu!';
+            }
+        }
+ 
+        function atualizarPagina() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
+ 
